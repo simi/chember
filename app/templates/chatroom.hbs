@@ -1,0 +1,33 @@
+<section class="messages">
+  {{#each model as |message|}}
+  <div class="message">
+    <span class="email">{{message.email}}</span>
+    <span class="email-hash"><img src="http://gravatar.com/avatar/{{message.emailHash}}" {{bind-attr title=message.author}} /></span>
+    <span class="author">{{message.author}}</span>
+    <span class="content">{{message.body}}</span>
+  </div>
+  {{/each}}
+  <div class="message-count">
+    Message Count: {{messageCount}}
+  </div>
+</section>
+
+<form class="message-input">
+  <div class="message-email">
+    <label>Your Email</label>
+    {{input type="text" value=email}}
+  </div>
+  <div class="message-author">
+    <label>Your Name</label>
+    {{input type="text" value=author}}
+  </div>
+  <div class="message-body">
+    <label>Message</label>
+    {{input type="text" value=body}}
+  </div>
+  <div class="message-submit">
+    <input type="submit"
+      {{bind-attr disabled=submissionIsInvalid}}
+      {{action 'submitMessage'}}>
+  </div>
+</form>
