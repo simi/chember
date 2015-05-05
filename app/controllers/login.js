@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     this.set("loginFailed", true);
   },
 
-  reset: function(error) {
+  reset: function() {
     clearTimeout(this.get("timeout"));
     this.setProperties({
       isProcessing: false,
@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
     });
   },
 
-  success: function(data) {
+  success: function() {
     this.reset();
   },
 
@@ -41,10 +41,10 @@ export default Ember.Controller.extend({
       this.set("timeout", setTimeout(this.slowConnection.bind(this), 5000));
 
       var credentials = this.getProperties('email', 'password');
-      this.get('session').authenticate('authenticator:api', credentials).then( (data) => {
-        this.success(data);
-      }, (error) => {
-        this.failure(error);
+      this.get('session').authenticate('authenticator:api', credentials).then( () => {
+        this.success();
+      }, () => {
+        this.failure();
       });
     }
   }

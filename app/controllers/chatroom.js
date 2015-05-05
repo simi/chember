@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
         username: this.get('currentUser.username'),
         body: this.get('body'),
         emailHash: this.get('emailHash')
-      }
+      };
 
       this.get('websocket').sendMessage(JSON.stringify(message));
       this.set('body', null);
