@@ -2,15 +2,14 @@ import Ember from 'ember';
 import md5 from './../md5';
 
 export default Ember.Controller.extend({
+  currentUser: Ember.computed.alias('session.secure'),
 
-  author: null,
-  email: null,
   body: null,
   emailHash: function() {
-    return md5(this.get('email'));
-  }.property('email'),
+    return md5(this.get('currentUser.email'));
+  }.property('currentUser.email'),
 
-  submissionIsValid: Ember.computed.and('author', 'body', 'email'),
+  submissionIsValid: Ember.computed.and('body'),
   submissionIsInvalid: Ember.computed.not('submissionIsValid'),
 
   websocket: Ember.inject.service('websocket'),
@@ -34,7 +33,13 @@ export default Ember.Controller.extend({
   actions: {
 
     submitMessage: function () {
-      let message = this.getProperties('author', 'body', 'email', 'emailHash');
+      let message = {
+        email: this.get('currentUser.email'),
+        username: this.get('currentUser.username'),
+        body: this.get('body'),
+        emailHash: this.get('emailHash')
+      }
+
       this.get('websocket').sendMessage(JSON.stringify(message));
       this.set('body', null);
     }

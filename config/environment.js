@@ -6,6 +6,10 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+    'simple-auth': {
+      routeAfterAuthentication: 'chatroom',
+      authorizer: 'authorizer:api'
+    },
     contentSecurityPolicy: {
       'default-src': "'none'",
       'connect-src': "'self' *",
